@@ -13,18 +13,13 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-      - name: Install Toolchain
-        uses: actions-rs/toolchain@v1
+      - name: Install Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
-          profile: minimal
-          override: true
       - name: Install Coverage Component
         uses: taiki-e/install-action@cargo-llvm-cov
       - name: Setup Cache
         uses: Swatinem/rust-cache@v2
       - name: Run Tests w/Coverage
-        uses: actions-rs/cargo@v1
-        with:
-          command: llvm-cov
-          args: --workspace --verbose
+        run: cargo llvm-cov --workspace --verbose
